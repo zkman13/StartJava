@@ -19,11 +19,11 @@ public class GuessingGame {
                 parsedRandomNumber = Integer.parseInt(input);
 
                 if (parsedRandomNumber == randomNumber) {
-                    System.out.println("Вы угадали!");
+                    System.out.println("Вы победили!");
                 } else if (parsedRandomNumber < randomNumber) {
-                    System.out.println("Ваше число меньше чем то, что загадал компьютер!");
+                    System.out.printf("%d меньше того, что загадал компьютер!\n", parsedRandomNumber);
                 } else {
-                    System.out.println("Ваше число больше чем то, что загадал компьютер!");
+                    System.out.printf("%d больше того, что загадал компьютер!\n", parsedRandomNumber);
                 }
             } catch (Exception e) {
                 System.out.println("Вы должны ввести целое число!");
