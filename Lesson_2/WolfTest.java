@@ -2,7 +2,6 @@ package Lesson_2;
 
 public class WolfTest {
     public static void main(String[] args) {
-
         Wolf wolf = new Wolf();
 
         wolf.sex = "Самец";
