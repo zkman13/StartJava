@@ -4,23 +4,20 @@ public class Calculator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Введите левое выражение: ");
+        System.out.print("Введите первое число: ");
         String leftExpression = scanner.nextLine().trim();
-        int parsedLeftExpression = 0;
+        int a = 0;
 
         try {
-            parsedLeftExpression = Integer.parseInt(leftExpression);
+            a = Integer.parseInt(leftExpression);
         } catch (Exception e) {
             System.out.println("Неверное левое выражение. Необходимо ввести целое число!");
-            System.exit(0);
+            scanner.close();
+            return;
         }
 
         System.out.print("Введите оператор: ");
         String operator = scanner.nextLine().trim();
-
-        if (operator.length() != 1) {
-            System.out.println("Неверный оператор. Должен быть одним из + - * / ^ % символов!");
-        }
 
         if (!(operator.equals("+") ||
                 operator.equals("-") ||
@@ -29,48 +26,53 @@ public class Calculator {
                 operator.equals("^") ||
                 operator.equals("%"))) {
             System.out.println("Неверный оператор. Оператор должен быть одним из + - * / ^ % символов!");
-            System.exit(0);
+            scanner.close();
+            return;
         }
 
-        System.out.print("Введите правое выражение: ");
+        System.out.print("Введите второе число: ");
         String rightExpression = scanner.nextLine().trim();
-        int parsedRightExpression = 0;
+        int b = 0;
 
         try {
-            parsedRightExpression = Integer.parseInt(rightExpression);
+            b = Integer.parseInt(rightExpression);
         } catch (Exception e) {
             System.out.println("Неверное правое выражение. Необходимо ввести целое число!");
-            System.exit(0);
+            scanner.close();
+            return;
         }
 
         scanner.close();
         double result = 0;
 
         if (operator.equals("+")) {
-            result = parsedLeftExpression + parsedRightExpression;
+            result = a + b;
         } else if (operator.equals("-")) {
-            result = parsedLeftExpression - parsedRightExpression;
+            result = a - b;
         } else if (operator.equals("*")) {
-            result = parsedLeftExpression * parsedRightExpression;
+            result = a * b;
         } else if (operator.equals("/")) {
-            if (parsedLeftExpression == 0) {
+            if (a == 0) {
                 System.out.println("На 0 делить нельзя!");
-                System.exit(0);
+                return;
             }
 
-            result = (double) parsedLeftExpression / parsedRightExpression;
+            result = (double) a / b;
         } else if (operator.equals("^")) {
-            result = (int) Math.pow(parsedLeftExpression, parsedRightExpression);
+            result = 1;
+            for (int i = 0; i < b; i++) {
+                result *= a;
+            }
         } else if (operator.equals("%")) {
-            result = parsedLeftExpression % parsedRightExpression;
+            result = a % b;
         }
 
-        if (Math.abs(result % 1) < 1e-10) {
-            System.out.println("Результат: " + parsedLeftExpression + " " + operator + " " +
-                    parsedRightExpression + " = " + (int) result);
+        if (result == (int) result) {
+            System.out.println("Результат: " + a + " " + operator + " " +
+                    b + " = " + (int) result);
         } else {
-            System.out.println("Результат: " + parsedLeftExpression + " " + operator + " " +
-                    parsedRightExpression + " = " + result);
+            System.out.println("Результат: " + a + " " + operator + " " +
+                    b + " = " + result);
         }
     }
 }
