@@ -93,24 +93,22 @@ public class CyclesTheme {
         System.out.println("\n5. Проверка количества двоек числа на четность/нечетность\n");
 
         int initialNumber = 3242592;
-        number = initialNumber;
-        int digitTwoCount = 0;
+        int initialNumberCopy = initialNumber;
+        int twosCount = 0;
 
-        while (number > 0) {
-            if (number % 10 == 2) {
-                digitTwoCount++;
+        while (initialNumberCopy > 0) {
+            if (initialNumberCopy % 10 == 2) {
+                twosCount++;
             }
-
-            number /= 10;
+            initialNumberCopy /= 10;
         }
-
         String parity = "нечетное";
 
-        if (digitTwoCount % 2 == 0) {
+        if (twosCount % 2 == 0) {
             parity = "четное";
         }
 
-        System.out.printf("В %d %s (%d) количество двоек%n", initialNumber, parity, digitTwoCount);
+        System.out.printf("В %d %s (%d) количество двоек%n", initialNumber, parity, twosCount);
 
         System.out.println("\n6. Вывод геометрических фигур\n");
 
@@ -124,7 +122,6 @@ public class CyclesTheme {
 
             System.out.println();
         }
-
         System.out.println();
 
         int lineWidth = 5;
@@ -181,26 +178,21 @@ public class CyclesTheme {
         for (int code = 33; code <= 45; code += 2) {
             char character = (char) code;
             String description = Character.getName(character);
-            String empty = "";
 
-            System.out.printf("%1s %-11d %-12c %s%n", empty, code, character, description);
+            System.out.printf("%1s %-11d %-12c %s%n", "", code, character, description);
         }
-
-        System.out.println();
-        System.out.printf("%-9s %-11s %11s%n", "DECIMAL", "CHARACTER", "DESCRIPTION");
 
         for (int code = 98; code <= 122; code += 2) {
             char character = (char) code;
             String description = Character.getName(character);
-            String empty = "";
 
-            System.out.printf("%1s %-11d %-12c %s%n", empty, code, character, description);
+            System.out.printf("%1s %-11d %-12c %s%n", "", code, character, description);
         }
 
         System.out.println("\n8. Проверка, является ли число палиндромом\n");
 
         initialNumber = 1234321;
-        int originalNumber = initialNumber;
+        initialNumberCopy = initialNumber;
         int reversedNumber = 0;
 
         while (initialNumber > 0) {
@@ -209,35 +201,42 @@ public class CyclesTheme {
             initialNumber /= 10;
         }
 
-        if (originalNumber == reversedNumber) {
-            System.out.printf("%d является палиндромом%n", originalNumber);
+        if (initialNumberCopy == reversedNumber) {
+            System.out.printf("%d является палиндромом%n", initialNumberCopy);
         } else {
-            System.out.printf("%d не является палиндромом%n", originalNumber);
+            System.out.printf("%d не является палиндромом%n", initialNumberCopy);
         }
 
         System.out.println("\n9. Проверка, является ли число счастливым\n");
 
         int luckyNumber = 123321;
-        initialNumber = luckyNumber;
+        initialNumberCopy = luckyNumber;
         int sumLeft = 0;
         int sumRight = 0;
+        int leftPart = 0;
+        int rightPart = 0;
+        int leftCoef = 1;
+        int rightCoef = 1;
 
         for (int i = 0; i < 6; i++) {
             int digit = luckyNumber % 10;
             luckyNumber /= 10;
 
             if (i < 3) {
-                sumLeft += digit;
-            } else {
                 sumRight += digit;
+                rightPart += digit * rightCoef;
+                rightCoef *= 10;
+            } else {
+                sumLeft += digit;
+                leftPart += digit * leftCoef;
+                leftCoef *= 10;
             }
         }
 
-        if (sumLeft == sumRight) {
-            System.out.printf("Число %d - счастливое%n", initialNumber);
-        } else {
-            System.out.printf("Число %d - не является счастливым%n", initialNumber);
-        }
+        System.out.printf("Число %d - %s%n", initialNumberCopy, (sumLeft == sumRight) ?
+                "счастливое" : "не является счастливым");
+        System.out.printf("Сумма цифр %d = %d%n", leftPart, sumLeft);
+        System.out.printf("Сумма цифр %d = %d%n", rightPart, sumRight);
 
         System.out.println("\n10. Вывод таблицы умножения Пифагора\n");
 
