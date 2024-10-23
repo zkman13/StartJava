@@ -11,7 +11,7 @@ public class Calculator {
         try {
             a = Integer.parseInt(leftExpression);
         } catch (Exception e) {
-            System.out.println("Неверное левое выражение. Необходимо ввести целое число!");
+            System.out.println("Необходимо ввести целое число!");
             scanner.close();
             return;
         }
@@ -37,7 +37,7 @@ public class Calculator {
         try {
             b = Integer.parseInt(rightExpression);
         } catch (Exception e) {
-            System.out.println("Неверное правое выражение. Необходимо ввести целое число!");
+            System.out.println("Необходимо ввести целое число!");
             scanner.close();
             return;
         }
