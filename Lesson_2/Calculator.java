@@ -72,8 +72,6 @@ public class Calculator {
     private void printResult(Number result, int a, String operator, int b) {
         if (result instanceof Double && result.intValue() == (double) result) {
             System.out.println("Результат: " + a + " " + operator + " " + b + " = " + result.intValue());
-        } else if (result instanceof Integer) {
-            System.out.println("Результат: " + a + " " + operator + " " + b + " = " + result);
         } else {
             System.out.println("Результат: " + a + " " + operator + " " + b + " = " + result);
         }
