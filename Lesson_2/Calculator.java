@@ -2,6 +2,27 @@ package Lesson_2;
 
 import java.util.Scanner;
 
+class InvalidNumberException extends Exception {
+
+    public InvalidNumberException() {
+        super();
+    }
+}
+
+class UnsupportedOperatorException extends Exception {
+
+    public UnsupportedOperatorException(String message) {
+        super(message);
+    }
+}
+
+class DivisionByZeroException extends Exception {
+
+    public DivisionByZeroException() {
+        super();
+    }
+}
+
 public class Calculator {
 
     private final Scanner scanner = new Scanner(System.in);
@@ -14,7 +35,7 @@ public class Calculator {
 
             return input;
         } catch (Exception e) {
-            throw new Exception("Ошибка: необходимо ввести целое число!");
+            throw new InvalidNumberException();
         }
     }
 
@@ -36,7 +57,7 @@ public class Calculator {
             case "%":
                 return "%";
             default:
-                throw new Exception(operator);
+                throw new UnsupportedOperatorException(operator);
         }
     }
 
@@ -50,7 +71,7 @@ public class Calculator {
                 return a * b;
             case "/":
                 if (a == 0) {
-                    throw new Exception("Ошибка: деление на ноль запрещено");
+                    throw new DivisionByZeroException();
                 }
                 return (double) a / b;
             case "^":
@@ -93,57 +114,26 @@ public class Calculator {
     }
 
     public void run() {
-        while (true) {
-            System.out.println();
-            int a = 0;
-
-            try {
-                a = readNumber("Введите первое число");
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                scanner.close();
-                return;
-            }
-
-            String operator = "";
-
-            try {
-                operator = readOperator();
-            } catch (Exception e) {
-                System.out.printf("Ошибка: операция %s не поддерживается.%n", e.getMessage());
-                System.out.println("Доступны следующие операции: +, -, *, /, ^, %");
-                scanner.close();
-                return;
-            }
-
-            int b = 0;
-
-            try {
-                b = readNumber("Введите второе число");
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                scanner.close();
-                return;
-            }
-
-            Number result = 0;
-
-            try {
-                result = calculate(a, b, operator);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                scanner.close();
-                return;
-            }
-
-            printResult(result, a, operator, b);
-
-            if (shouldContinue()) {
-                continue;
-            }
-
+        try {
+            do {
+                System.out.println();
+                int a = readNumber("Введите первое число");
+                String operator = readOperator();
+                int b = readNumber("Введите второе число");
+                Number result = calculate(a, b, operator);
+                printResult(result, a, operator, b);
+            } while (shouldContinue());
+        } catch (InvalidNumberException e) {
+            System.out.println("Ошибка: необходимо ввести целое число");
+        } catch (UnsupportedOperatorException e) {
+            System.out.printf("Ошибка: операция %s не поддерживается.%n", e.getMessage());
+            System.out.println("Доступны следующие операции: +, -, *, /, ^, %");
+        } catch (DivisionByZeroException e) {
+            System.out.println("Ошибка: деление на ноль запрещено");
+        } catch (Exception e) {
+            System.out.println("Произошла неизвестная ошибка");
+        } finally {
             scanner.close();
-            return;
         }
     }
 }
