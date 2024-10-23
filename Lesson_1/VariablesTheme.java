@@ -95,7 +95,7 @@ public class VariablesTheme {
                 "\nНовые значения переменных:\na: " + a + ", b: " + b + "\n");
 
         a ^= b;
-        b = a ^ b;
+        b ^= a;
         a ^= b;
 
         System.out.println("Способ 3: с помощью побитовой операции " +

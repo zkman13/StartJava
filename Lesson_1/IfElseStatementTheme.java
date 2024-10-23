@@ -81,23 +81,21 @@ public class IfElseStatementTheme {
 
         if (hundreds1 == hundreds2 && tens1 == tens2 && ones1 == ones2) {
             System.out.println("Все цифры в числах " + number1 + " и " + number2 + " одинаковы.");
+        } else if (hundreds1 != hundreds2 && tens1 != tens2 && ones1 != ones2) {
+            System.out.println("Одинаковых цифр в разрядах чисел " + number1 + " и " + number2 + " нет.");
         } else {
-            if (hundreds1 != hundreds2 && tens1 != tens2 && ones1 != ones2) {
-                System.out.println("Одинаковых цифр в разрядах чисел " + number1 + " и " + number2 + " нет.");
-            } else {
-                System.out.println("Числа: " + number1 + " и " + number2);
+            System.out.println("Числа: " + number1 + " и " + number2);
 
-                if (hundreds1 == hundreds2) {
-                    System.out.println("Цифры " + hundreds1 + " в первом разряде одинаковы.");
-                }
+            if (hundreds1 == hundreds2) {
+                System.out.println("Цифры " + hundreds1 + " в третьем разряде одинаковы.");
+            }
 
-                if (tens1 == tens2) {
-                    System.out.println("Цифры " + tens1 + " во втором разряде одинаковы.");
-                }
+            if (tens1 == tens2) {
+                System.out.println("Цифры " + tens1 + " во втором разряде одинаковы.");
+            }
 
-                if (ones1 == ones2) {
-                    System.out.println("Цифры " + ones1 + " в третьем разряде одинаковы.");
-                }
+            if (ones1 == ones2) {
+                System.out.println("Цифры " + ones1 + " в первом разряде одинаковы.");
             }
         }
 
