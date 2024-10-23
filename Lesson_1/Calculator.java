@@ -5,11 +5,11 @@ public class Calculator {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Введите первое число: ");
-        String leftExpression = scanner.nextLine().trim();
         int a = 0;
 
         try {
-            a = Integer.parseInt(leftExpression);
+            a = scanner.nextInt();
+            scanner.nextLine();
         } catch (Exception e) {
             System.out.println("Необходимо ввести целое число!");
             scanner.close();
@@ -31,11 +31,10 @@ public class Calculator {
         }
 
         System.out.print("Введите второе число: ");
-        String rightExpression = scanner.nextLine().trim();
         int b = 0;
 
         try {
-            b = Integer.parseInt(rightExpression);
+            b = scanner.nextInt();
         } catch (Exception e) {
             System.out.println("Необходимо ввести целое число!");
             scanner.close();
