@@ -2,9 +2,9 @@ import java.util.Random;
 
 public class RpsGameFormatting {
     public static void main(String[] args) throws InterruptedException {
-        String rock ="✊";
-        String scissors= "✌️";
-        String paper = "✋" ;
+        String rock = "✊";
+        String scissors = "✌️";
+        String paper = "✋";
         Random r = new Random();
 
         int position1 = r.nextInt(100);
@@ -16,21 +16,21 @@ public class RpsGameFormatting {
             sign1 = scissors;
         }
 
-        String name1  = "HEL";
+        String name1 = "HEL";
         System.out.println("Ход " + name1 + ": ");
 
-        for (int i = 0; i < 5; i ++) {
-            System.out.print (rock + "\r") ;
+        for (int i = 0; i < 5; i++) {
+            System.out.print(rock + "\r");
             Thread.sleep(100);
-            System.out.print (scissors + "\r" );
+            System.out.print(scissors + "\r");
             Thread.sleep(100);
-            System.out.print (paper + "\r");
+            System.out.print(paper + "\r");
             Thread.sleep(100);
         }
 
         System.out.println(sign1);
 
-        int position2 = r.nextInt (100);
+        int position2 = r.nextInt(100);
         String sign2 = rock;
 
         if (position2 > 66) {
@@ -42,10 +42,10 @@ public class RpsGameFormatting {
         String name2 = "WALLE";
         System.out.println("Ход " + name2 + ": ");
 
-        for (int i = 0 ; i < 5 ; i++) {
+        for (int i = 0; i < 5; i++) {
             System.out.print(rock + "\r");
             Thread.sleep(100);
-            System.out.print(scissors + "\r" );
+            System.out.print(scissors + "\r");
             Thread.sleep(100);
             System.out.print (paper + "\r");
             Thread.sleep(100);
