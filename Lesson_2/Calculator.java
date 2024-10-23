@@ -132,6 +132,7 @@ public class Calculator {
                 result = calculate(a, b, operator);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
+                scanner.close();
                 return;
             }
 
