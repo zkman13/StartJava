@@ -4,7 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GuessNumber {
-    public static void main(String[] args) {
+
+    public void run() {
         Random random = new Random();
         int randomNumber = random.nextInt(100) + 1;
 

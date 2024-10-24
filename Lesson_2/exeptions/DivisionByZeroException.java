@@ -1,8 +1,8 @@
 package Lesson_2.exeptions;
 
-public class DivisionByZeroException extends Exception {
+public class DivisionByZeroException extends ArithmeticException {
 
-    public DivisionByZeroException() {
-        super();
+    public DivisionByZeroException(String message) {
+        super(message);
     }
 }
