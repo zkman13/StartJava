@@ -1,27 +1,9 @@
 package Lesson_2;
 
+import Lesson_2.exeptions.DivisionByZeroException;
+import Lesson_2.exeptions.InvalidNumberException;
+import Lesson_2.exeptions.UnsupportedOperatorException;
 import java.util.Scanner;
-
-class InvalidNumberException extends Exception {
-
-    public InvalidNumberException() {
-        super();
-    }
-}
-
-class UnsupportedOperatorException extends Exception {
-
-    public UnsupportedOperatorException(String message) {
-        super(message);
-    }
-}
-
-class DivisionByZeroException extends Exception {
-
-    public DivisionByZeroException() {
-        super();
-    }
-}
 
 public class Calculator {
 
