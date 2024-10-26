@@ -17,7 +17,7 @@ public class RpsGameFormatting {
 
         int position = generatePosition(name1, r);
         String sign1 = determineSign(position);
-        showSigns( sign1 );
+        showSigns(sign1);
 
         position = generatePosition(name2, r);
         String sign2 = determineSign(position);
