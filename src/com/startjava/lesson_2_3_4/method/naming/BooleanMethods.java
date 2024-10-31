@@ -1,6 +1,6 @@
-package com.startjava.lesson_2_3.method.naming;
+package com.startjava.lesson_2_3_4.method.naming;
 
-import static com.startjava.lesson_2_3.method.naming.MethodUtils.getCurrentMethodName;
+import static com.startjava.lesson_2_3_4.method.naming.MethodUtils.getCurrentMethodName;
 
 public class BooleanMethods {
 
