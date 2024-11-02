@@ -54,47 +54,13 @@ public class Main {
 
         System.out.println("\n3. Удаление элементов массива, превышающих заданное значение\n");
 
-        int arrayIndex = -1;
-        Object[] nullifyResult = Nullifier.nullify(arrayIndex);
-        if (nullifyResult != null) {
-            double[] randomized = (double[]) nullifyResult[0];
-            double[] replaced = (double[]) nullifyResult[1];
-            int zeroCount = (int) nullifyResult[2];
-            printNullificationReport(randomized, replaced, arrayIndex, zeroCount);
-        }
-
+        Nullifier.nullify(-1);
         System.out.println();
-
-        arrayIndex = 15;
-        nullifyResult = Nullifier.nullify(arrayIndex);
-        if (nullifyResult != null) {
-            double[] randomized = (double[]) nullifyResult[0];
-            double[] replaced = (double[]) nullifyResult[1];
-            int zeroCount = (int) nullifyResult[2];
-            printNullificationReport(randomized, replaced, arrayIndex, zeroCount);
-        }
-
+        Nullifier.nullify(15);
         System.out.println();
-
-        arrayIndex = 0;
-        nullifyResult = Nullifier.nullify(arrayIndex);
-        if (nullifyResult != null) {
-            double[] randomized = (double[]) nullifyResult[0];
-            double[] replaced = (double[]) nullifyResult[1];
-            int zeroCount = (int) nullifyResult[2];
-            printNullificationReport(randomized, replaced, arrayIndex, zeroCount);
-        }
-
+        Nullifier.nullify(0);
         System.out.println();
-
-        arrayIndex = 14;
-        nullifyResult = Nullifier.nullify(arrayIndex);
-        if (nullifyResult != null) {
-            double[] randomized = (double[]) nullifyResult[0];
-            double[] replaced = (double[]) nullifyResult[1];
-            int zeroCount = (int) nullifyResult[2];
-            printNullificationReport(randomized, replaced, arrayIndex, zeroCount);
-        }
+        Nullifier.nullify(14);
 
         System.out.println("\n4. Вывод отсортированных символов в виде треугольника\n");
 
@@ -103,6 +69,14 @@ public class Main {
         TrianglePrinter.print('/', '!', false);
         System.out.println();
         TrianglePrinter.print('A', 'J', false);
+
+        System.out.println("\n5. Заполнение массива уникальными числами\n");
+
+        System.out.println(SegmentPrinter.createAndPrint(-30, -10, 23) + "\n");
+        System.out.println(SegmentPrinter.createAndPrint(-30, 10, 10) + "\n");
+        System.out.println(SegmentPrinter.createAndPrint(-34, -34, 0) + "\n");
+        System.out.println(SegmentPrinter.createAndPrint(-1, 2, -3) + "\n");
+        System.out.println(SegmentPrinter.createAndPrint(5, -8, 2));
 
         System.out.println("\n6. Вывод текста с эффектом пишущей машинки\n");
 
@@ -144,28 +118,5 @@ public class Main {
         }
 
         return String.format("%d! = %s = %d", number, sb, result);
-    }
-
-    private static void printNullificationReport(
-            double[] randomized,
-            double[] replaced,
-            int arrayIndex,
-            int zeroCount) {
-        System.out.println("Массив с случайными числами:");
-        printArrayTwoLines(randomized);
-        System.out.println("Измененный массив:");
-        printArrayTwoLines(replaced);
-        System.out.printf("Значение по индексу %d: %.3f%n", arrayIndex, randomized[arrayIndex]);
-        System.out.printf("Количество обнуленных элементов: %d%n", zeroCount);
-    }
-
-    private static void printArrayTwoLines(double[] array) {
-        for (int i = 0; i < array.length; i++) {
-            System.out.printf("%.3f ", array[i]);
-            if (i == 7) {
-                System.out.println();
-            }
-        }
-        System.out.println();
     }
 }

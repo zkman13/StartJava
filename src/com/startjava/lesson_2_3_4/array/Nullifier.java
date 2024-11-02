@@ -5,16 +5,18 @@ import java.util.Random;
 
 public class Nullifier {
 
-    public static Object[] nullify(int index) {
+    public static void nullify(int index) {
         if (index < 0 || index > 14) {
             System.out.println("Ошибка: индекс должен быть от 0 до 14");
-            return null;
+            return;
         }
 
         double[] randomized = fillWithRandom();
         Object[] result = replaceGreaterWithZero(index, randomized);
+        double[] replaced = (double[]) result[0];
+        int zeroCount = (int) result[1];
 
-        return new Object[]{randomized, result[0], result[1]};
+        printReport(randomized, replaced, index, zeroCount);
     }
 
     private static double[] fillWithRandom() {
@@ -40,5 +42,28 @@ public class Nullifier {
         }
 
         return new Object[]{copied, zeroCount};
+    }
+
+    private static void printReport(
+            double[] randomized,
+            double[] replaced,
+            int arrayIndex,
+            int zeroCount) {
+        System.out.println("Массив с случайными числами:");
+        printArrayTwoLines(randomized);
+        System.out.println("Измененный массив:");
+        printArrayTwoLines(replaced);
+        System.out.printf("Значение по индексу %d: %.3f%n", arrayIndex, randomized[arrayIndex]);
+        System.out.printf("Количество обнуленных элементов: %d%n", zeroCount);
+    }
+
+    private static void printArrayTwoLines(double[] array) {
+        for (int i = 0; i < array.length; i++) {
+            System.out.printf("%.3f ", array[i]);
+            if (i == 7) {
+                System.out.println();
+            }
+        }
+        System.out.println();
     }
 }
