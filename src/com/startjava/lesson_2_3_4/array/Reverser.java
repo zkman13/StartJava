@@ -2,18 +2,18 @@ package com.startjava.lesson_2_3_4.array;
 
 public class Reverser {
 
-    public static int[] reverse(int[] numbers) {
-        if (numbers == null) {
+    public static int[] reverse(int[] toReverse) {
+        if (toReverse == null) {
             return null;
         }
 
-        int length = numbers.length;
-        int[] newNumbers = new int[length];
+        int length = toReverse.length;
+        int[] reversed = new int[length];
 
         for (int i = length - 1; i >= 0; i--) {
-            newNumbers[length - i - 1] = numbers[i];
+            reversed[length - i - 1] = toReverse[i];
         }
 
-        return newNumbers;
+        return reversed;
     }
 }

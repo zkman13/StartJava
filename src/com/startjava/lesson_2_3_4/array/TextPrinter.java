@@ -55,7 +55,7 @@ public class TextPrinter {
             System.out.print(isInRange(i, leftIdx, rightIdx) ? String.valueOf(ch).toUpperCase() : ch);
 
             try {
-                Thread.sleep(50);
+                Thread.sleep(10);
             } catch (Exception e) {
                 Thread.currentThread().interrupt();
             }
