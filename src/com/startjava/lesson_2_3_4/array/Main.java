@@ -72,23 +72,23 @@ public class Main {
 
         System.out.println("\n5. Заполнение массива уникальными числами\n");
 
-        System.out.println(SegmentPrinter.createAndPrint(-30, -10, 23) + "\n");
-        System.out.println(SegmentPrinter.createAndPrint(-30, 10, 10) + "\n");
-        System.out.println(SegmentPrinter.createAndPrint(-34, -34, 0) + "\n");
-        System.out.println(SegmentPrinter.createAndPrint(-1, 2, -3) + "\n");
-        System.out.println(SegmentPrinter.createAndPrint(5, -8, 2));
+        System.out.println(UniqueNumsPrinter.createAndPrint(-30, -10, 23) + "\n");
+        System.out.println(UniqueNumsPrinter.createAndPrint(-30, 10, 10) + "\n");
+        System.out.println(UniqueNumsPrinter.createAndPrint(-34, -34, 0) + "\n");
+        System.out.println(UniqueNumsPrinter.createAndPrint(-1, 2, -3) + "\n");
+        System.out.println(UniqueNumsPrinter.createAndPrint(5, -8, 2));
 
         System.out.println("\n6. Вывод текста с эффектом пишущей машинки\n");
 
-        TextPrinter.print("1) Java - это C++, из которого убрали все пистолеты, " +
+        TypingEffectPrinter.printWithTypingEffect("1) Java - это C++, из которого убрали все пистолеты, " +
                 "ножи и дубинки.\n- James Gosling");
         System.out.println();
-        TextPrinter.print("Чтобы написать чистый код, мы сначала пишем грязный код, " +
+        TypingEffectPrinter.printWithTypingEffect("Чтобы написать чистый код, мы сначала пишем грязный код, " +
                 "затем рефакторим его.\n- Robert Martin");
         System.out.println();
-        TextPrinter.print(null);
+        TypingEffectPrinter.printWithTypingEffect(null);
         System.out.println();
-        TextPrinter.print("");
+        TypingEffectPrinter.printWithTypingEffect("");
     }
 
     private static void printFactorials(int[] initials, int[] factorials) {

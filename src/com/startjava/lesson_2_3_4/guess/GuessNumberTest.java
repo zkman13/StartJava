@@ -1,5 +1,6 @@
 package com.startjava.lesson_2_3_4.guess;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class GuessNumberTest {
@@ -8,7 +9,9 @@ public class GuessNumberTest {
 
     public static void main(String[] args) {
         String[] names = promptPlayerNames();
-        GuessNumber game = new GuessNumber(new Player(names[0]), new Player(names[1]), scanner);
+        Player player1 = new Player(names[0]);
+        Player player2 = new Player(names[1]);
+        GuessNumber game = new GuessNumber(player1, player2, scanner);
 
         do {
             System.out.println();
@@ -37,9 +40,12 @@ public class GuessNumberTest {
 
     private static boolean shouldContinue() {
         System.out.println();
+        String mainLine = "Хотите продолжить игру? [yes / no]: ";
+        String alternativeLine = "Введите корректный ответ [yes / no]: ";
+        boolean isMainLine = true;
 
         while (true) {
-            System.out.print("Хотите продолжить игру? [yes/no]: ");
+            System.out.print(isMainLine ? mainLine : alternativeLine);
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (input.equals("yes")) {
@@ -47,6 +53,8 @@ public class GuessNumberTest {
             } else if (input.equals("no")) {
                 return false;
             }
+
+            isMainLine = false;
         }
     }
 }

@@ -19,15 +19,15 @@ public class FactorialCalculator {
 
     private static int factorial(int number) {
         if (number < 0) {
-            return -1;
+            return 0;
         }
 
-        int total = 1;
+        int result = 1;
 
         for (int i = 1; i <= number; i++) {
-            total *= i;
+            result *= i;
         }
 
-        return total;
+        return result;
     }
 }
