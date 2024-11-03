@@ -1,6 +1,5 @@
 package com.startjava.lesson_2_3_4.guess;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GuessNumberTest {
@@ -50,7 +49,9 @@ public class GuessNumberTest {
 
             if (input.equals("yes")) {
                 return true;
-            } else if (input.equals("no")) {
+            }
+
+            if (input.equals("no")) {
                 return false;
             }
 

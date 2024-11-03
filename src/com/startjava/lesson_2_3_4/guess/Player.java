@@ -16,23 +16,23 @@ public class Player {
         return name;
     }
 
-    public int[] getGuesses() {
-        return Arrays.stream(guesses).filter(guess -> guess != 0).toArray();
-    }
-
     public String getStringGuesses() {
-        int[] sliced = Arrays.copyOf(guesses, guessCount);
+        int[] nums = getGuesses();
         StringBuilder sb = new StringBuilder();
 
-        for (int n : sliced) {
+        for (int n : nums) {
             sb.append(n).append(" ");
         }
 
         return sb.toString().trim();
     }
 
+    public int[] getGuesses() {
+        return Arrays.copyOf(guesses, guessCount);
+    }
+
     public void addGuess(int guess) {
-        ++guessCount;
+        guessCount++;
         guesses[guessCount - 1] = guess;
     }
 

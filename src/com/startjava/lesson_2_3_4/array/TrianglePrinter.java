@@ -8,7 +8,7 @@ public class TrianglePrinter {
             return;
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder triangle = new StringBuilder();
         int totalLines = end - start + 1;
         int maxCharsInLine = (end - start) * 2 + 1;
         int lineShift = maxCharsInLine / 2;
@@ -18,7 +18,7 @@ public class TrianglePrinter {
 
         do {
             lineCounter++;
-            sb.append(" ".repeat(lineShift))
+            triangle.append(" ".repeat(lineShift))
                     .append(String.valueOf(currentChar).repeat(charNumberInLine))
                     .append(lineCounter < totalLines ? "\n" : "");
             charNumberInLine += 2;
@@ -26,6 +26,6 @@ public class TrianglePrinter {
             currentChar += (char) (asc ? 1 : -1);
         } while (lineCounter < totalLines);
 
-        System.out.println(sb.toString());
+        System.out.println(triangle.toString());
     }
 }
