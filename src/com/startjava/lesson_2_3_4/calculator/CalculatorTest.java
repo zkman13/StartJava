@@ -1,5 +1,6 @@
 package com.startjava.lesson_2_3_4.calculator;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class CalculatorTest {
@@ -43,25 +44,33 @@ public class CalculatorTest {
 
     private static boolean shouldContinue() {
         System.out.println();
+        String mainLine = "Хотите продолжить вычисления? [yes / no]: ";
+        String alternativeLine = "Введите корректный ответ [yes / no]: ";
+        boolean isMainLine = true;
 
         while (true) {
-            System.out.print("Хотите продолжить вычисления? [yes/no]: ");
+            System.out.print(isMainLine ? mainLine : alternativeLine);
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (input.equals("yes")) {
                 return true;
             }
+
             if (input.equals("no")) {
                 return false;
             }
+
+            isMainLine = false;
         }
     }
 
     private static void printResult(int a, int b, String operator, double result) {
+        DecimalFormat df = new DecimalFormat("#.###");
+
         if (result == (int) result) {
             System.out.println("Результат: " + a + " " + operator + " " + b + " = " + (int) result);
         } else {
-            System.out.println("Результат: " + a + " " + operator + " " + b + " = " + result);
+            System.out.println("Результат: " + a + " " + operator + " " + b + " = " + df.format(result));
         }
     }
 }

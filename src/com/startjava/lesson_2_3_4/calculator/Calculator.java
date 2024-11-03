@@ -31,13 +31,9 @@ public class Calculator {
                 }
                 return (double) a / b;
             case "^":
-                int result = 1;
-                for (int i = 0; i < Math.abs(b); i++) {
-                    result *= a;
-                }
-                return b < 0 ? (double) 1 / result : result;
+                return Math.pow(a, b);
             case "%":
-                return a % b;
+                return Math.IEEEremainder(a, b);
             default:
                 throw new UnsupportedOperationException(String.format("Ошибка: операция %s " +
                         "не поддерживается%nДоступны следующие операции: +, -, *, /, ^, %%", operator));
