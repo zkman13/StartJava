@@ -147,13 +147,18 @@ public class HangmanGame {
             if (input.length() > 1) {
                 System.out.println("Ошибка: введено больше одной буквы!");
                 continue;
-            } else if (!Character.isLetter(letter)) {
+            }
+
+            if (!Character.isLetter(letter)) {
                 System.out.println("Ошибка: требуется ввести букву!");
                 continue;
-            } else if (!isCyrillicLetter(letter)) {
+            }
+
+            if (!isCyrillicLetter(letter)) {
                 System.out.println("Ошибка: буква не является кириллической!");
                 continue;
             }
+
             if (isAlreadyAttempted(letter)) {
                 System.out.println("Ошибка: буква уже была введена!");
                 continue;
