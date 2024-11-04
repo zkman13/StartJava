@@ -2,21 +2,6 @@ package com.startjava.lesson_2_3_4.calculator;
 
 public class Calculator {
 
-    public void checkOperator(String operator) {
-        switch (operator) {
-            case "+":
-            case "-":
-            case "*":
-            case "/":
-            case "^":
-            case "%":
-                return;
-            default:
-                throw new UnsupportedOperationException(String.format("Ошибка: операция %s " +
-                        "не поддерживается%nДоступны следующие операции: +, -, *, /, ^, %%", operator));
-        }
-    }
-
     public double calculate(int a, int b, String operator) {
         switch (operator) {
             case "+":
@@ -33,6 +18,9 @@ public class Calculator {
             case "^":
                 return Math.pow(a, b);
             case "%":
+                if (b == 0) {
+                    throw new ArithmeticException("Ошибка: попытка выполнить операцию с нулевым делителем");
+                }
                 return Math.IEEEremainder(a, b);
             default:
                 throw new UnsupportedOperationException(String.format("Ошибка: операция %s " +

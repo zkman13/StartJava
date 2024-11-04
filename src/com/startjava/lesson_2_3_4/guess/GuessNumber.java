@@ -5,17 +5,15 @@ import java.util.Scanner;
 
 public class GuessNumber {
 
-    private final Scanner scanner;
     private final Player player1;
     private final Player player2;
 
-    public GuessNumber(Player player1, Player player2, Scanner scanner) {
-        this.scanner = scanner;
+    public GuessNumber(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
     }
 
-    public void play() {
+    public void play(Scanner scanner) {
         Player curPlayer = player1;
         int randomNumber = new Random().nextInt(100) + 1;
         int playerNumber = 0;
@@ -24,13 +22,13 @@ public class GuessNumber {
         System.out.println("Игра началась! У каждого игрока по 10 попыток.");
 
         while (true) {
-            playerNumber = askForPlayerGuess(curPlayer.getName());
+            playerNumber = askForPlayerGuess(curPlayer.getName(), scanner);
             giveHint(playerNumber, randomNumber);
             curPlayer.addGuess(playerNumber);
 
-            if (isAnswerCorrect(playerNumber, randomNumber)) {
+            if (isGuessed(playerNumber, randomNumber)) {
                 break;
-            } else if (curPlayer.getGuessCount() == 10) {
+            } else if (curPlayer.getAttempt() == 10) {
                 isWinner = false;
                 break;
             }
@@ -38,28 +36,11 @@ public class GuessNumber {
             curPlayer = curPlayer == player1 ? player2 : player1;
         }
 
-        if (isWinner) {
-            String winner = curPlayer.getName();
-            int guessCount = curPlayer.getGuessCount();
-            int winningGuess = curPlayer.getGuesses()[guessCount - 1];
-
-            System.out.printf("%s угадывал: %s%n", player1.getName(), player1.getStringGuesses());
-            System.out.printf("%s угадывал: %s%n", player2.getName(), player2.getStringGuesses());
-            System.out.printf("%n%s угадал число %d с %d-й попытки", winner, winningGuess, guessCount);
-            System.out.printf("%n%s победил!%n", winner);
-        } else {
-            System.out.printf("%nУ %s закончились попытки!%n", curPlayer.getName());
-        }
-
-        player1.reset();
-        player2.reset();
+        printGameResults(isWinner, curPlayer);
+        reset();
     }
 
-    private boolean isAnswerCorrect(int playerNumber, int randomNumber) {
-        return playerNumber == randomNumber;
-    }
-
-    private int askForPlayerGuess(String playerName) {
+    private int askForPlayerGuess(String playerName, Scanner scanner) {
         int playerNumber;
 
         while (true) {
@@ -84,5 +65,39 @@ public class GuessNumber {
         } else if (playerNumber > randomNumber) {
             System.out.printf("%d больше того, что загадал компьютер!%n", playerNumber);
         }
+    }
+
+    private boolean isGuessed(int playerNumber, int randomNumber) {
+        return playerNumber == randomNumber;
+    }
+
+    private void printGameResults(boolean isWinner, Player curPlayer) {
+        if (isWinner) {
+            String winner = curPlayer.getName();
+            int guessCount = curPlayer.getAttempt();
+            int winningGuess = curPlayer.getGuesses()[guessCount - 1];
+
+            System.out.printf("%n%s угадывал: %s%n", player1.getName(), getStringGuesses(player1.getGuesses()));
+            System.out.printf("%s угадывал: %s%n", player2.getName(), getStringGuesses(player2.getGuesses()));
+            System.out.printf("%n%s угадал число %d с %d-й попытки", winner, winningGuess, guessCount);
+            System.out.printf("%n%s победил!%n", winner);
+        } else {
+            System.out.printf("%nУ %s закончились попытки!%n", curPlayer.getName());
+        }
+    }
+
+    private String getStringGuesses(int[] nums) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int n : nums) {
+            sb.append(n).append(" ");
+        }
+
+        return sb.toString().trim();
+    }
+
+    private void reset() {
+        player1.reset();
+        player2.reset();
     }
 }

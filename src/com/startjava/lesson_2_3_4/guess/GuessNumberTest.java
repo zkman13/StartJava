@@ -4,23 +4,25 @@ import java.util.Scanner;
 
 public class GuessNumberTest {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final String mainMessage = "Хотите продолжить игру? [yes / no]: ";
+    private static final String alternativeMessage = "Введите корректный ответ [yes / no]: ";
 
     public static void main(String[] args) {
-        String[] names = promptPlayerNames();
+        final Scanner scanner = new Scanner(System.in);
+        String[] names = inputPlayerNames(scanner);
         Player player1 = new Player(names[0]);
         Player player2 = new Player(names[1]);
-        GuessNumber game = new GuessNumber(player1, player2, scanner);
+        GuessNumber game = new GuessNumber(player1, player2);
 
         do {
             System.out.println();
-            game.play();
-        } while (shouldContinue());
+            game.play(scanner);
+        } while (shouldContinue(scanner));
 
         scanner.close();
     }
 
-    private static String[] promptPlayerNames() {
+    private static String[] inputPlayerNames(Scanner scanner) {
         System.out.print("\nВведите имя первого игрока: ");
         String player1Name = scanner.nextLine().trim();
         System.out.print("Введите имя второго игрока: ");
@@ -37,14 +39,12 @@ public class GuessNumberTest {
         return new String[]{player1Name, player2Name};
     }
 
-    private static boolean shouldContinue() {
+    private static boolean shouldContinue(Scanner scanner) {
         System.out.println();
-        String mainLine = "Хотите продолжить игру? [yes / no]: ";
-        String alternativeLine = "Введите корректный ответ [yes / no]: ";
-        boolean isMainLine = true;
+        boolean isMainMessage = true;
 
         while (true) {
-            System.out.print(isMainLine ? mainLine : alternativeLine);
+            System.out.print(isMainMessage ? mainMessage : alternativeMessage);
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (input.equals("yes")) {
@@ -55,7 +55,7 @@ public class GuessNumberTest {
                 return false;
             }
 
-            isMainLine = false;
+            isMainMessage = false;
         }
     }
 }
