@@ -20,7 +20,6 @@ public class HangmanGame {
         final Scanner scanner = new Scanner(System.in);
         initGuessedWord();
         initDisplayedWord(guessedWord.length());
-
         displayGameScreen();
 
         while (true) {
