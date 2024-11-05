@@ -29,6 +29,7 @@ public class Player {
     }
 
     public void reset() {
+        Arrays.fill(guesses, 0, attempt, 0);
         attempt = 0;
     }
 }

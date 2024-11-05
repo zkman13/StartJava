@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class CalculatorTest {
 
-    private final static String mainLine = "Хотите продолжить вычисления? [yes / no]: ";
-    private final static String alternativeLine = "Введите корректный ответ [yes / no]: ";
+    private final static String MAIN_MESSAGE = "Хотите продолжить вычисления? [yes / no]: ";
+    private final static String ALTERNATIVE_MESSAGE = "Введите корректный ответ [yes / no]: ";
     private final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -17,19 +17,11 @@ public class CalculatorTest {
 
             try {
                 System.out.print("Введите математическое выражение: ");
-                String input = scanner.nextLine();
-                Object[] operatorData = getOperatorData(input.trim().split(""));
-                String operator = (String) operatorData[0];
-                int operatorIdx = (int) operatorData[1];
-
-                if (operatorIdx == -1) {
-                    throw new RuntimeException("Ошибка: введите корректное математическое выражение");
-                }
-
-                int a = parseOperand(input.substring(0, operatorIdx).trim());
-                int b = parseOperand(input.substring(operatorIdx + 1).trim());
+                Object[] expressionParts = calculator.parseExpression(scanner.nextLine());
+                int a = (int) expressionParts[0];
+                int b = (int) expressionParts[1];
+                String operator = (String) expressionParts[2];
                 double result = calculator.calculate(a, b, operator);
-
                 printResult(a, b, operator, result);
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
@@ -37,30 +29,6 @@ public class CalculatorTest {
         } while (shouldContinue());
 
         scanner.close();
-    }
-
-    private static Object[] getOperatorData(String[] data) {
-        final String operators = "+-*/^%";
-        int idx = -1;
-        String operator = "";
-
-        for (int i = 0; i < data.length; i++) {
-            if (operators.contains(data[i]) && data[i + 1].equals(" ")) {
-                idx = i;
-                operator = data[idx];
-                break;
-            }
-        }
-
-        return new Object[]{operator, idx};
-    }
-
-    private static int parseOperand(String data) {
-        try {
-            return Integer.parseInt(data);
-        } catch (Exception e) {
-            throw new RuntimeException("Ошибка: введите корректное математическое выражение");
-        }
     }
 
     private static void printResult(int a, int b, String operator, double result) {
@@ -78,7 +46,7 @@ public class CalculatorTest {
         boolean isMainMessage = true;
 
         while (true) {
-            System.out.print(isMainMessage ? mainLine : alternativeLine);
+            System.out.print(isMainMessage ? MAIN_MESSAGE : ALTERNATIVE_MESSAGE);
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (input.equals("yes")) {

@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class GuessNumberTest {
 
-    private static final String mainMessage = "Хотите продолжить игру? [yes / no]: ";
-    private static final String alternativeMessage = "Введите корректный ответ [yes / no]: ";
+    private static final String MAIN_MESSAGE = "Хотите продолжить игру? [yes / no]: ";
+    private static final String ALTERNATIVE_MESSAGE = "Введите корректный ответ [yes / no]: ";
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
@@ -44,7 +44,7 @@ public class GuessNumberTest {
         boolean isMainMessage = true;
 
         while (true) {
-            System.out.print(isMainMessage ? mainMessage : alternativeMessage);
+            System.out.print(isMainMessage ? MAIN_MESSAGE : ALTERNATIVE_MESSAGE);
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (input.equals("yes")) {

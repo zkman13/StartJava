@@ -26,9 +26,9 @@ public class GuessNumber {
             giveHint(playerNumber, randomNumber);
             curPlayer.addGuess(playerNumber);
 
-            if (isGuessed(playerNumber, randomNumber)) {
-                break;
-            } else if (curPlayer.getAttempt() == 10) {
+            if (isGuessed(playerNumber, randomNumber)) break;
+
+            if (curPlayer.getAttempt() == 10) {
                 isWinner = false;
                 break;
             }
@@ -47,8 +47,7 @@ public class GuessNumber {
             System.out.printf("%nУгадывает %s. Введите число: ", playerName);
 
             try {
-                playerNumber = scanner.nextInt();
-                scanner.skip("\n");
+                playerNumber = Integer.parseInt(scanner.nextLine());
                 break;
             } catch (RuntimeException e) {
                 System.out.println("Вы должны ввести целое число!");

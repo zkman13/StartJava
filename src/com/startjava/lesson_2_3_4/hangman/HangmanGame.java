@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HangmanGame {
-    private final List<String> words;
+    private final String[] words;
     private final Set<Character> wrongLetters = new HashSet<>();
     private final Set<Character> guessedLetters = new HashSet<>();
     private String guessedWord;
@@ -12,7 +12,7 @@ public class HangmanGame {
     private int attemptCount = 5;
     private int stage = 0;
 
-    public HangmanGame(List<String> words) {
+    public HangmanGame(String[] words) {
         this.words = words;
     }
 
@@ -54,8 +54,8 @@ public class HangmanGame {
 
     private void initGuessedWord() {
         Random r = new Random();
-        int index = r.nextInt(words.size());
-        guessedWord = words.get(index).toUpperCase();
+        int index = r.nextInt(words.length);
+        guessedWord = words[index].toUpperCase();
     }
 
     private void initDisplayedWord(int length) {
@@ -93,14 +93,15 @@ public class HangmanGame {
     }
 
     private void displayGallows(int stage) {
-        String[] gallows = new String[7];
-        gallows[0] = "__________\n";
-        gallows[1] = "|/    |    \n";
-        gallows[2] = "|          \n";
-        gallows[3] = "|          \n";
-        gallows[4] = "|          \n";
-        gallows[5] = "|          \n";
-        gallows[6] = "==========";
+        String[] gallows = {
+                "__________\n",
+                "|/    |    \n",
+                "|          \n",
+                "|          \n",
+                "|          \n",
+                "|          \n",
+                "=========="
+        };
 
         gallows = updateGallows(gallows, stage);
         System.out.println(Arrays.stream(gallows).reduce("", (a, b) -> a + b));
