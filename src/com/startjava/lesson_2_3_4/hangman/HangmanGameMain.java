@@ -1,7 +1,5 @@
 package com.startjava.lesson_2_3_4.hangman;
 
-import java.util.List;
-
 public class HangmanGameMain {
 
     public static void main(String[] args) {
