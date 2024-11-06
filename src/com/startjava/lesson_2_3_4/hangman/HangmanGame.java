@@ -4,13 +4,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HangmanGame {
+
+    private final int DEFAULT_LETTERS_ARRAY_SIZE = 4;
     private final String[] words;
-    private final Set<Character> wrongLetters = new HashSet<>();
-    private final Set<Character> guessedLetters = new HashSet<>();
+    private char[] wrongLetters = new char[DEFAULT_LETTERS_ARRAY_SIZE];
+    private char[] guessedLetters = new char[DEFAULT_LETTERS_ARRAY_SIZE];
+    private int wrongLettersCount;
+    private int guessedLettersCount;
     private String guessedWord;
     private String displayedWord;
     private int attemptCount = 5;
-    private int stage = 0;
+    private int stage;
 
     public HangmanGame(String[] words) {
         this.words = words;
@@ -26,11 +30,11 @@ public class HangmanGame {
             char guess = input(scanner);
 
             if (isGuessedLetter(guess)) {
-                guessedLetters.add(guess);
+                addGuessedLetter(guess);
                 increaseAttemptCount();
                 decreaseStage();
             } else {
-                wrongLetters.add(guess);
+                addWrongLetter(guess);
                 decreaseAttemptCount();
                 increaseStage();
             }
@@ -72,7 +76,10 @@ public class HangmanGame {
     private void displayWord() {
         displayedWord = guessedWord
                 .chars()
-                .mapToObj(ch -> guessedLetters.contains((char) ch) ? (char) ch : '_')
+                .mapToObj(ch ->
+                        isCharInArray(guessedLetters, (char) ch)
+                                ? (char) ch
+                                : '_')
                 .map(String::valueOf)
                 .collect(Collectors.joining());
 
@@ -84,12 +91,8 @@ public class HangmanGame {
     }
 
     private void displayWrongLetters() {
-        String result = wrongLetters
-                .stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(", "));
-
-        System.out.printf("Неверные буквы: %s%n%n", result);
+        String word = new String(wrongLetters).replaceAll("\0", "");
+        System.out.printf("Неверные буквы: %s%n%n", word);
     }
 
     private void displayGallows(int stage) {
@@ -174,11 +177,37 @@ public class HangmanGame {
     }
 
     private boolean isAlreadyAttempted(char ch) {
-        return guessedLetters.contains(ch) || wrongLetters.contains(ch);
+        return isCharInArray(guessedLetters, ch) || isCharInArray(wrongLetters, ch);
+    }
+
+    private boolean isCharInArray(char[] array, char ch) {
+        return new String(array).indexOf(ch) >= 0;
     }
 
     private boolean isGuessedLetter(char ch) {
         return guessedWord.chars().anyMatch(c -> c == ch);
+    }
+
+    private void addGuessedLetter(char ch) {
+        if (guessedLettersCount >= guessedLetters.length) {
+            guessedLetters = resizeCharArray(guessedLetters);
+        }
+
+        guessedLetters[guessedLettersCount++] = ch;
+    }
+
+    private void addWrongLetter(char ch) {
+        if (wrongLettersCount >= wrongLetters.length) {
+            wrongLetters = resizeCharArray(wrongLetters);
+        }
+
+        wrongLetters[wrongLettersCount++] = ch;
+    }
+
+    private char[] resizeCharArray(char[] array) {
+        char[] copied = new char[array.length * 2];
+        System.arraycopy(array, 0, copied, 0, array.length);
+        return copied;
     }
 
     private void increaseAttemptCount() {

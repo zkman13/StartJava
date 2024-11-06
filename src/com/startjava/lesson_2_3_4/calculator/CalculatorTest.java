@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class CalculatorTest {
 
-    private final static String MAIN_MESSAGE = "Хотите продолжить вычисления? [yes / no]: ";
-    private final static String ALTERNATIVE_MESSAGE = "Введите корректный ответ [yes / no]: ";
+    private final static String MAIN_CONTINUE_INPUT_MSG = "Хотите продолжить вычисления? [yes / no]: ";
+    private final static String ALTERNATIVE_CONTINUE_INPUT_MSG = "Введите корректный ответ [yes / no]: ";
     private final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -17,11 +17,12 @@ public class CalculatorTest {
 
             try {
                 System.out.print("Введите математическое выражение: ");
-                Object[] expressionParts = calculator.parseExpression(scanner.nextLine());
-                int a = (int) expressionParts[0];
-                int b = (int) expressionParts[1];
-                String operator = (String) expressionParts[2];
-                double result = calculator.calculate(a, b, operator);
+                Object[] calcResult = calculator.start(scanner.nextLine());
+                int a = (int) calcResult[0];
+                int b = (int) calcResult[1];
+                String operator = (String) calcResult[2];
+                double result = (double) calcResult[3];
+
                 printResult(a, b, operator, result);
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
@@ -35,9 +36,9 @@ public class CalculatorTest {
         DecimalFormat df = new DecimalFormat("#.###");
 
         if (result == (int) result) {
-            System.out.println("Результат: " + a + " " + operator + " " + b + " = " + (int) result);
+            System.out.printf("Результат: %d %s %d = %d%n", a, operator, b, (int) result);
         } else {
-            System.out.println("Результат: " + a + " " + operator + " " + b + " = " + df.format(result));
+            System.out.printf("Результат: %d %s %d = %s%n", a, operator, b, df.format(result));
         }
     }
 
@@ -46,7 +47,7 @@ public class CalculatorTest {
         boolean isMainMessage = true;
 
         while (true) {
-            System.out.print(isMainMessage ? MAIN_MESSAGE : ALTERNATIVE_MESSAGE);
+            System.out.print(isMainMessage ? MAIN_CONTINUE_INPUT_MSG : ALTERNATIVE_CONTINUE_INPUT_MSG);
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (input.equals("yes")) {

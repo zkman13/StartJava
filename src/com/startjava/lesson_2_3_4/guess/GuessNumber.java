@@ -13,7 +13,7 @@ public class GuessNumber {
         this.player2 = player2;
     }
 
-    public void play(Scanner scanner) {
+    public void play(Scanner scanner, int maxGuesses) {
         Player curPlayer = player1;
         int randomNumber = new Random().nextInt(100) + 1;
         int playerNumber = 0;
@@ -28,7 +28,7 @@ public class GuessNumber {
 
             if (isGuessed(playerNumber, randomNumber)) break;
 
-            if (curPlayer.getAttempt() == 10) {
+            if (curPlayer.getAttempt() == maxGuesses) {
                 isWinner = false;
                 break;
             }

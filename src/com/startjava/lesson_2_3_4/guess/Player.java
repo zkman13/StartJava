@@ -5,11 +5,12 @@ import java.util.Arrays;
 public class Player {
 
     private final String name;
-    private final int[] guesses = new int[10];
+    private final int[] guesses;
     private int attempt;
 
-    public Player(String name) {
+    public Player(String name, int maxGuesses) {
         this.name = name;
+        this.guesses = new int[maxGuesses];
     }
 
     public String getName() {
