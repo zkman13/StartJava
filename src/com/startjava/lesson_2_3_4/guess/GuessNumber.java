@@ -5,16 +5,15 @@ import java.util.Scanner;
 
 public class GuessNumber {
 
-    private final Player player1;
-    private final Player player2;
+    private final Player[] players;
 
-    public GuessNumber(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
+    public GuessNumber(Player[] players) {
+        this.players = players;
     }
 
-    public void play(Scanner scanner, int maxGuesses) {
-        Player curPlayer = player1;
+    public void play(Scanner scanner, int maxGuesses, int maxPlayers) {
+        int curPlayerIndex = 0;
+        Player curPlayer = players[curPlayerIndex];
         int randomNumber = new Random().nextInt(100) + 1;
         int playerNumber = 0;
         boolean isWinner = true;
@@ -33,7 +32,8 @@ public class GuessNumber {
                 break;
             }
 
-            curPlayer = curPlayer == player1 ? player2 : player1;
+            curPlayerIndex = getNextPlayerIndex(curPlayerIndex, maxPlayers);
+            curPlayer = players[curPlayerIndex];
         }
 
         printGameResults(isWinner, curPlayer);
@@ -70,14 +70,25 @@ public class GuessNumber {
         return playerNumber == randomNumber;
     }
 
+    private int getNextPlayerIndex(int index, int maxPlayers) {
+        if (index == maxPlayers - 1) {
+            return 0;
+        }
+
+        return index + 1;
+    }
+
     private void printGameResults(boolean isWinner, Player curPlayer) {
         if (isWinner) {
             String winner = curPlayer.getName();
             int guessCount = curPlayer.getAttempt();
             int winningGuess = curPlayer.getGuesses()[guessCount - 1];
+            System.out.println();
 
-            System.out.printf("%n%s угадывал: %s%n", player1.getName(), getStringGuesses(player1.getGuesses()));
-            System.out.printf("%s угадывал: %s%n", player2.getName(), getStringGuesses(player2.getGuesses()));
+            for (Player player : players) {
+                System.out.printf("%s угадывал: %s%n", player.getName(), getStringGuesses(player.getGuesses()));
+            }
+
             System.out.printf("%n%s угадал число %d с %d-й попытки", winner, winningGuess, guessCount);
             System.out.printf("%n%s победил!%n", winner);
         } else {
@@ -96,7 +107,8 @@ public class GuessNumber {
     }
 
     private void reset() {
-        player1.reset();
-        player2.reset();
+        for (Player player : players) {
+            player.reset();
+        }
     }
 }
