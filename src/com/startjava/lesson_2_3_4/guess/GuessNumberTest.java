@@ -5,11 +5,10 @@ import java.util.Scanner;
 public class GuessNumberTest {
 
     private static final int MAX_GUESSES = 10;
-    private static final int PLAYER_NAME_ARRAY_SIZE = 64;
     private static final int MAX_PLAYERS = 3;
     private static final String MAIN_MESSAGE = "Хотите продолжить игру? [yes / no]: ";
     private static final String ALTERNATIVE_MESSAGE = "Введите корректный ответ [yes / no]: ";
-    private static final String[] playerNames = new String[PLAYER_NAME_ARRAY_SIZE];
+    private static final String[] playerNames = new String[MAX_PLAYERS];
 
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
