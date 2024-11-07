@@ -15,7 +15,7 @@ public class Calculator {
     }
 
     private Object[] parseExpression(String expression) {
-        Object[] parts = getOperatorData(expression.trim().split(""));
+        Object[] parts = getParts(expression.trim().split(""));
         String operator = (String) parts[0];
         int operatorIdx = (int) parts[1];
 
@@ -52,7 +52,7 @@ public class Calculator {
         };
     }
 
-    private static Object[] getOperatorData(String[] expression) {
+    private static Object[] getParts(String[] expression) {
         final String operators = "+-*/^%";
         int idx = -1;
         String operator = "";
