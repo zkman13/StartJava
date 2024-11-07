@@ -34,12 +34,9 @@ public class CalculatorTest {
 
     private static void printResult(int a, int b, String operator, double result) {
         DecimalFormat df = new DecimalFormat("#.###");
+        String resultStr = result == (int) result ? String.valueOf((int) result) : df.format(result);
 
-        if (result == (int) result) {
-            System.out.printf("Результат: %d %s %d = %d%n", a, operator, b, (int) result);
-        } else {
-            System.out.printf("Результат: %d %s %d = %s%n", a, operator, b, df.format(result));
-        }
+        System.out.printf("Результат: %d %s %d = %s%n", a, operator, b, resultStr);
     }
 
     private static boolean shouldContinue() {
