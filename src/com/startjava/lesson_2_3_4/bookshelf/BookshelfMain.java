@@ -8,9 +8,9 @@ public class BookshelfMain {
     private static final int CAPACITY = 10;
 
     public static void main(String[] args) {
-        System.out.println();
         final Scanner scanner = new Scanner(System.in);
         final Bookshelf bookshelf = new Bookshelf(CAPACITY);
+        System.out.println();
         renderWelcomeMsg();
 
         while (true) {
@@ -22,10 +22,9 @@ public class BookshelfMain {
             final int menuOptionNumber = inputMenuOption(scanner, menuSize);
             final MenuOption selectedOption = menuOptions[menuOptionNumber - 1];
             renderMenuSelection(selectedOption);
+            int exitCode = processMenuOption(selectedOption, bookshelf, scanner);
 
-            try {
-                processMenuOption(selectedOption, bookshelf, scanner);
-            } catch (RuntimeException e) {
+            if (exitCode == 1) {
                 break;
             }
 
@@ -98,7 +97,7 @@ public class BookshelfMain {
         }
     }
 
-    private static void processMenuOption(
+    private static int processMenuOption(
             final MenuOption selectedOption,
             final Bookshelf bookshelf,
             final Scanner scanner) {
@@ -108,25 +107,27 @@ public class BookshelfMain {
             case REMOVE_BOOK -> removeBook(bookshelf, scanner);
             case CLEAR_BOOKSHELF -> clearBookshelf(bookshelf);
             case EXIT -> {
-                throw new RuntimeException();
+                return 1;
             }
             default -> throw new RuntimeException("Неизвестный пункт меню");
         }
+
+        return 0;
     }
 
     private static void addBook(final Bookshelf bookshelf, final Scanner scanner) {
-        final BookInfo bookInfo = collectBookInfo(scanner);
-        final Book book = new Book(bookInfo.getTitle(), bookInfo.getAuthor(), bookInfo.getYear());
+        final BookDetails bookDetails = collectBookInfo(scanner);
+        final Book book = new Book(bookDetails.title(), bookDetails.author(), bookDetails.year());
         bookshelf.addBook(book);
         System.out.println("\n> Книга добавлена\n");
     }
 
-    private static BookInfo collectBookInfo(final Scanner scanner) {
+    private static BookDetails collectBookInfo(final Scanner scanner) {
         final String author = inputBookAuthor(scanner);
         final String title = inputBookTitle(scanner);
         final int year = inputBookYear(scanner);
 
-        return new BookInfo(title, author, year);
+        return new BookDetails(title, author, year);
     }
 
     private static String inputBookTitle(final Scanner scanner) {
@@ -182,7 +183,7 @@ public class BookshelfMain {
 
     private static void findBook(final Bookshelf bookshelf, final Scanner scanner) {
         final String title = getTitle(scanner);
-        final Book[] founded = bookshelf.findBook(title);
+        final Book[] founded = bookshelf.findBooks(title);
         renderFoundedBooks(founded, title);
     }
 
@@ -204,7 +205,7 @@ public class BookshelfMain {
 
     private static void removeBook(final Bookshelf bookshelf, final Scanner scanner) {
         final String title = getTitle(scanner);
-        final Book[] removedBooks = bookshelf.removeBook(title);
+        final Book[] removedBooks = bookshelf.removeBooks(title);
         renderRemovedBooks(removedBooks, title);
     }
 
@@ -251,26 +252,24 @@ public class BookshelfMain {
         System.out.printf("В шкафу книг - %d, свободно полок - %d%n%n", bookCount, freeShelfCount);
     }
 
-    private static void renderBookshelf(
-            final Bookshelf bookshelf
-    ) {
+    private static void renderBookshelf(final Bookshelf bookshelf) {
         final Book[] books = bookshelf.getBooks();
         final int bookCounter = bookshelf.getBookCount();
-        final int maxBookInfoLength = bookshelf.getMaxBookInfoLength();
+        final int maxShelfLength = bookshelf.getMaxShelfLength();
 
         for (int i = 0; i < CAPACITY; i++) {
             final Book book = books[i];
             final StringBuilder sb = new StringBuilder();
 
             if (i == 0) {
-                buildCeilingLine(sb, maxBookInfoLength);
+                buildCeilingLine(sb, maxShelfLength);
             }
 
             if (i < bookCounter) {
-                final int freeSpaceCounter = maxBookInfoLength - book.getBookInfoLength();
-                buildBookInfoLine(sb, book.getBookInfo(), freeSpaceCounter, maxBookInfoLength);
+                final int freeSpaceCounter = maxShelfLength - book.getBookInfoLength();
+                buildBookInfoLine(sb, book.getBookInfo(), freeSpaceCounter, maxShelfLength);
             } else {
-                buildShelfBase(sb, maxBookInfoLength);
+                buildShelfBase(sb, maxShelfLength);
             }
 
             System.out.println(sb);
@@ -279,40 +278,35 @@ public class BookshelfMain {
         System.out.println();
     }
 
-    private static void buildCeilingLine(final StringBuilder sb, final int maxBookInfoLength) {
-        sb
-                .append("|")
-                .append("-".repeat(maxBookInfoLength))
-                .append("|\n");
+    private static void buildCeilingLine(final StringBuilder sb, final int maxShelfLength) {
+        sb.append("|").append("-".repeat(maxShelfLength)).append("|\n");
     }
 
     private static void buildBookInfoLine(
             final StringBuilder sb,
             final String bookInfo,
             final int freeSpaceCounter,
-            final int maxBookInfoLength
-    ) {
+            final int maxShelfLength) {
         sb
                 .append("|")
                 .append(bookInfo)
                 .append(" ".repeat(freeSpaceCounter))
                 .append("|\n")
                 .append("|")
-                .append("-".repeat(maxBookInfoLength))
+                .append("-".repeat(maxShelfLength))
                 .append("|");
     }
 
-    private static void buildShelfBase(final StringBuilder sb, final int maxBookInfoLength) {
+    private static void buildShelfBase(final StringBuilder sb, final int maxShelfLength) {
         sb
                 .append("|")
-                .append(" ".repeat(maxBookInfoLength))
-                .append("|\n")
+                .append(" ".repeat(maxShelfLength)).append("|\n")
                 .append("|")
-                .append("-".repeat(maxBookInfoLength))
+                .append("-".repeat(maxShelfLength))
                 .append("|");
     }
 
-    private static void waitForEnterToContinue(Scanner scanner) {
+    private static void waitForEnterToContinue(final Scanner scanner) {
         while (true) {
             System.out.println("Для продолжения работы нажмите клавишу <Enter>");
             final String input = scanner.nextLine();

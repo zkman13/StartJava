@@ -7,7 +7,7 @@ public class Bookshelf {
     private final int capacity;
     private Book[] books;
     private int bookCount = 0;
-    private int maxBookInfoLength = 0;
+    private int maxShelfLength = 0;
 
     public Bookshelf(final int capacity) {
         this.capacity = capacity;
@@ -15,11 +15,11 @@ public class Bookshelf {
     }
 
     public Book[] getBooks() {
-        return books;
+        return books.clone();
     }
 
-    public int getMaxBookInfoLength() {
-        return maxBookInfoLength;
+    public int getMaxShelfLength() {
+        return maxShelfLength;
     }
 
     public int getBookCount() {
@@ -27,27 +27,33 @@ public class Bookshelf {
     }
 
     public void addBook(final Book book) {
-        books[bookCount] = book;
-        bookCount++;
-        updateMaxBookInfoLength(book.getBookInfoLength());
+        if (bookCount == capacity) {
+            throw new IllegalStateException("Нельзя добавить книгу. Книжный шкаф заполнен.");
+        }
+
+        books[bookCount++] = book;
+        updateMaxShelfLength(book.getBookInfoLength());
     }
 
-    public Book[] findBook(final String title) {
-        final int foundBookCount = countBooksByTitle(title);
+    private void updateMaxShelfLength(final int length) {
+        maxShelfLength = Math.max(maxShelfLength, length);
+    }
 
+    public Book[] findBooks(final String title) {
+        final int foundBookCount = countBooks(title);
         return getFoundBooks(foundBookCount, title);
     }
 
-    private int countBooksByTitle(final String title) {
-        int foundBookCount = 0;
+    private int countBooks(final String title) {
+        int count = 0;
 
         for (int i = 0; i < bookCount; i++) {
             if (books[i].getTitle().equalsIgnoreCase(title)) {
-                foundBookCount++;
+                count++;
             }
         }
 
-        return foundBookCount;
+        return count;
     }
 
     private Book[] getFoundBooks(final int foundBookCount, final String title) {
@@ -62,7 +68,7 @@ public class Bookshelf {
         return foundBooks;
     }
 
-    public Book[] removeBook(final String title) {
+    public Book[] removeBooks(final String title) {
         final Book[] newBooks = new Book[capacity];
         final Book[] removedBooks = new Book[capacity];
         int newBookCount = 0;
@@ -81,18 +87,20 @@ public class Bookshelf {
         }
 
         books = newBooks;
+        maxShelfLength = calculateMaxShelfLength();
 
         return Arrays.copyOf(removedBooks, removedBookCount);
     }
 
-    public void updateMaxBookInfoLength(int length) {
-        if (length > maxBookInfoLength) {
-            maxBookInfoLength = length;
-        }
+    private int calculateMaxShelfLength() {
+        return Arrays
+                .stream(Arrays.copyOfRange(books, 0, bookCount))
+                .mapToInt(Book::getBookInfoLength)
+                .reduce(0, Integer::max);
     }
 
     public void clear() {
-        books = new Book[capacity];
+        Arrays.fill(books, null);
         bookCount = 0;
     }
 }
