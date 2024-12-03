@@ -15,7 +15,7 @@ public class Bookshelf {
     }
 
     public Book[] getBooks() {
-        return books.clone();
+        return Arrays.copyOf(books, bookCount);
     }
 
     public int getMaxShelfLength() {
@@ -28,7 +28,7 @@ public class Bookshelf {
 
     public void addBook(final Book book) {
         if (bookCount == capacity) {
-            throw new IllegalStateException("Нельзя добавить книгу. Книжный шкаф заполнен.");
+            throw new BookshelfOverflowException("Нельзя добавить книгу. Книжный шкаф заполнен.");
         }
 
         books[bookCount++] = book;
@@ -69,25 +69,21 @@ public class Bookshelf {
     }
 
     public Book[] removeBooks(final String title) {
-        final Book[] newBooks = new Book[capacity];
         final Book[] removedBooks = new Book[capacity];
-        int newBookCount = 0;
         int removedBookCount = 0;
 
-        for (final Book book : books) {
-            if (book != null) {
-                if (book.getTitle().equalsIgnoreCase(title)) {
-                    removedBooks[removedBookCount++] = book;
-                    bookCount--;
-                    continue;
-                }
-
-                newBooks[newBookCount++] = book;
+        for (int i = 0; i < bookCount; i++) {
+            if (books[i].getTitle().equalsIgnoreCase(title)) {
+                removedBooks[removedBookCount++] = books[i];
+                bookCount--;
+                System.arraycopy(books, i + 1, books, i, bookCount - i);
+                books[bookCount] = null;
+                i--;
             }
         }
 
-        books = newBooks;
-        maxShelfLength = calculateMaxShelfLength();
+        int newMaxShelfLength = calculateMaxShelfLength();
+        maxShelfLength = (newMaxShelfLength > 0) ? newMaxShelfLength : maxShelfLength;
 
         return Arrays.copyOf(removedBooks, removedBookCount);
     }
@@ -100,7 +96,7 @@ public class Bookshelf {
     }
 
     public void clear() {
-        Arrays.fill(books, null);
+        Arrays.fill(books, 0, bookCount, null);
         bookCount = 0;
     }
 }
